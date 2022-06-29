@@ -1,0 +1,31 @@
+﻿  Pathfinding.cpp
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(68,13): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(151,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(152,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(170,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(170,87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(228,152): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(228,111): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(228,70): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(228,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(246,148): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(246,107): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(246,66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(246,41): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Pathfinding.vcxproj -> C:\Users\s213090\Documents\AIforGames\Pathfinding\x64\Debug\Pathfinding.exe
