@@ -1,31 +1,41 @@
 ﻿  Pathfinding.cpp
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(68,13): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(151,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(152,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(170,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(170,87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(228,152): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(33,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(34,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(52,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(52,87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(110,159): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(228,111): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(110,116): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(228,70): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(228,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(246,148): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(110,73): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(110,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(123,163): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(246,107): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(123,124): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(246,66): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(246,41): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(123,85): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Pathfinding.cpp(123,46): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  main.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Pathfinding.vcxproj -> C:\Users\s213090\Documents\AIforGames\Pathfinding\x64\Debug\Pathfinding.exe
