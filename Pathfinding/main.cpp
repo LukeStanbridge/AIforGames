@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <glm/glm.hpp>
 #include "Pathfinding.h"
+#include "Agent.h"
 
 using namespace AIForGames;
 using namespace std;
@@ -36,11 +37,10 @@ int main(int argc, char* argv[])
     Node* start = nodeMap.GetNode(1, 1); // start node
     Node* end = nodeMap.GetNode(10, 3); // end node
     vector<Node*> nodeMapPath = DijkstrasSearch(start, end);
-    Color lineColor = { 255, 255, 255, 255 };
 
-    PathAgent agent;
+    PathAgent agent(nodeMap);
     agent.SetNode(start);
-    agent.SetSpeed(64);
+    agent.SetSpeed(5);
     vector<Node*> agentPath = DijkstrasSearch(start, end);
     
     float time = (float)GetTime();
@@ -57,7 +57,6 @@ int main(int argc, char* argv[])
             ClearBackground(BLACK);
 
             nodeMap.Draw();
-            nodeMap.DrawPath(nodeMapPath, lineColor);
 
             if (IsMouseButtonPressed(0))
             {
@@ -80,4 +79,5 @@ int main(int argc, char* argv[])
     CloseWindow();
 
     return 0;
+
 }

@@ -6,12 +6,19 @@ using namespace std;
 
 namespace AIForGames
 {
+    Node::Node(float x, float y)
+    {
+        position.x = x;
+        position.y = y;
+    }
+
     void Node::ConnectTo(Node* other, float cost)
     {
         connections.push_back(Edge(other, cost));
     }
 
-    NodeMap::~NodeMap()
+#pragma region NodeMap
+    NodeMap::~NodeMap() //destructor
     {
         for (int y = 0; y < m_height; y++)
         {
@@ -34,13 +41,12 @@ namespace AIForGames
         m_width = asciiMap[0].size();
 
         m_nodes = new Node * [m_width * m_height];
-
-        // loop over the strings, creating Node entries as we go
-        for (int y = 0; y < m_height; y++)
+        
+        for (int y = 0; y < m_height; y++) //loop over the strings, creating Node entries as we go
         {
             std::string& line = asciiMap[y];
-            // report to the user that you have a mis-matched string length
-            if (line.size() != m_width)
+            
+            if (line.size() != m_width) //report to the user that you have a mis-matched string length
                 cout << "Mismatched line #" << y << " in ASCII map (" << line.size() << " instead of " << m_width << ")" << std::endl;
 
             for (int x = 0; x < m_width; x++)
@@ -84,12 +90,8 @@ namespace AIForGames
     void NodeMap::Draw()
     {
         // red color for the blocks
-        Color cellColor;
-        cellColor.a = 255;
-        cellColor.r = 255;
-        cellColor.g = 0;
-        cellColor.b = 0;
-        Color lineColor = GREEN;
+        Color cellColor = PURPLE;
+        Color lineColor = WHITE;
 
         for (int y = 0; y < m_height; y++)
         {
@@ -114,14 +116,18 @@ namespace AIForGames
         }
     }
 
-    void NodeMap::DrawPath(vector<Node*> path, Color lineColor)
+    void NodeMap::DrawPath(vector<Node*> path, Color lineColor, Node* start, Node* end)
     {
         for (int i = 0; i < path.size() - 1; i++)
         {
             Node* a = path[i];
             Node* b = path[i + 1];
+            start = path[0];
+            end = path[i + 1];
             DrawLine(((a->position.x + 0.5f) * m_cellSize), ((a->position.y + 0.5f) * m_cellSize), ((b->position.x + 0.5f) * m_cellSize), ((b->position.y + 0.5f) * m_cellSize), lineColor);
         }
+        DrawCircle(((start->position.x + 0.5f) * 32), ((start->position.y + 0.5f) * 32), 8, BLUE);
+        DrawCircle(((end->position.x + 0.5f) * 32), ((end->position.y + 0.5f) * 32), 8, RED);
     }
 
     Node* NodeMap::GetClosestNode(glm::vec2 worldPos)
@@ -134,145 +140,45 @@ namespace AIForGames
 
         return GetNode(i, j);
     }
+#pragma endregion
 
-    vector<Node*> DijkstrasSearch(Node* startNode, Node* endNode)
+#pragma region PathAgent
+
+    PathAgent::PathAgent(NodeMap& nodeMap): nodeMap(nodeMap)
     {
-        std::vector<Node*> emptyPath;
 
-        //if startNode is null OR endNode is null
-        // Raise Error
-        if (startNode == nullptr || endNode == nullptr) throw runtime_error("Both start and end node must be specified");
-
-        // if startNode == endNode
-        // return empty Path
-        if (startNode == endNode)
-            return emptyPath;
-
-        // Set startNode.gScore to 0
-        // Set startNode.parent to null
-        startNode->gScore = 0;
-        startNode->previous = nullptr;
-
-        // Let openList be a List of Nodes
-        // Let closedList be a List of Nodes
-        set<Node*> closedList;
-        vector<Node*> openList;
-
-        // Add startNode to openList
-        openList.push_back(startNode);
-
-        // While openList is not empty    
-        while (!openList.empty())
-        {
-            // Sort openList by Node.gScore
-            sort(openList.begin(), openList.end(),
-                [](Node* n1, Node* n2)
-                {
-                    return n1->gScore > n2->gScore;
-                });
-
-            // Let currentNode = first item in openList
-            Node* currentNode = openList.back();
-
-            // If currentNode is endNode
-            // Exit While Loop
-            if (currentNode == endNode) break;
-
-            // Remove currentNode from openList
-            // Add currentNode to closedList
-            openList.pop_back();
-            closedList.insert(currentNode);
-
-            //For all connections c in currentNode
-            for (Edge& c : currentNode->connections)
-            {
-                // If c.target not in closedList
-                if (closedList.count(c.target) == 0)
-                {
-                    // Let gScore = currentNode.gScore + c.cost
-                    float gScore = currentNode->gScore + c.cost;
-
-                    //If c.target not in openList
-
-                    if (find(openList.begin(), openList.end(), c.target) == openList.end())
-                    {
-                        //Let c.target.gScore = gScore
-                        //Let c.target.parent = currentNode
-                        //Add c.target to openList
-                        c.target->gScore = gScore;
-                        c.target->previous = currentNode;
-                        openList.push_back(c.target);
-                    }
-
-                    //Else if (gScore < c.target.gScore)
-                    else if (gScore < c.target->gScore)
-                    {
-                        //Let c.target.gScore = gScore
-                        //Let c.target.parent = currentNode
-                        c.target->gScore = gScore;
-                        c.target->previous = currentNode;
-                    }
-                }
-            }
-        }
-
-        // Let Path be a list of Nodes
-        // Let currentNode = endNode
-        vector<Node*> path;
-        Node* currentNode = endNode;
-
-        // While currentNode is not null
-        while (currentNode != nullptr)
-        {
-            // Add currentNode to beginning of Path
-            // Let currentNode = currentNode.parent
-            path.push_back(currentNode);
-            currentNode = currentNode->previous;
-        }
-
-        reverse(path.begin(), path.end());
-
-        // Return the path for navigation between startNode/endNode
-        return path;
     }
 
     void PathAgent::Update(float deltaTime)
     {
         if (m_path.empty()) return;
 
-        // Calculate the distance to the next node and the unit vector to that node
-        float distance = glm::distance(m_position, m_path[m_currentIndex + 1]->position);
-        glm::vec2 direction = m_path[m_currentIndex + 1]->position - m_position;
-        direction = glm::normalize(direction);
+        float distance = glm::distance(m_position, m_path[m_currentIndex + 1]->position); // calc distance to next node
+        glm::vec2 direction = m_path[m_currentIndex + 1]->position - m_position; //calc unit vector to next node
+        direction = glm::normalize(direction); // normalize direction
 
-        // Subtract speed * deltaTime from the distance (how much we’re going to move this frame)
-        distance -= m_speed * deltaTime;
+        float distancePerFrame = distance - m_speed * deltaTime; //set the speed per frame
 
-        // If distance is less than zero, then this frame we’re just moving towards the target node. Add speed*deltaTime*unit vector to our position
-        if (distance > 0)
+        if (distancePerFrame > 0) //if speed per frame is greater than zero
         {
-            m_position += m_speed * deltaTime * direction;
+            m_position += m_speed * deltaTime * direction; // move towards target node
         }
-        // Otherwise, we’ve overshot the node. Add one to currentIndex. 
-        else
+        else //overshot the node
         {
-            m_currentNode = m_path[m_currentIndex + 1];
-            m_currentIndex++;
+            m_currentNode = m_path[m_currentIndex + 1];//set current node to next node on path
+            m_currentIndex++; //increase index
 
-            // If we’ve reached the end of our path, snap to the final node and empty the path so future updates do nothing.
-            if (m_currentIndex == m_path.size() - 1)
+            if (m_currentIndex == m_path.size() - 1) //if reached end of path
             {
-                
-                m_path.clear();
+                m_position = m_currentNode->position; //snap to final node
+                m_path.clear(); //clear contents of the path so future updates do nothing
             }
             else
             {
-                // If we have a next node, then distance with the subtracted speed*deltaTime tells us how far we’ve overshot the node if we invert it.
-                // Find the unit vector from our previous node to the new next node, and move along this vector by the overshoot distance from the previous next node.
-                float inverseDistance = -distance;
-                glm::vec2 newDirection = m_path[m_currentIndex + 1]->position - m_position;
-                newDirection = glm::normalize(newDirection);
-                m_position += inverseDistance * newDirection;
+                float inverseDistance = -distance; //invert distance
+                glm::vec2 newDirection = m_path[m_currentIndex - 1]->position - m_position; //calc unit vector from previous node to new next node
+                newDirection = glm::normalize(newDirection); //normalize new direction
+                m_position += inverseDistance * newDirection; //move along this vector by the overshoot distance from the previous next node.
             }
         }
     }
@@ -283,37 +189,90 @@ namespace AIForGames
         m_currentIndex = 0;
     }
 
-
     void PathAgent::Draw()
     {
-        DrawCircle((int)((m_position.x + 0.5f) * 32), (int)((m_position.y +0.5f) * 32), 8, { 255,255,0,255 });
-
-        /*float cellSize = m_map.GetCellSize();
-
-        if (m_path.size() > 0)
+        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y +0.5f) * 32), 8, GREEN); //draw agent
+        if (!m_path.empty()) //if there is a path
         {
-            m_map.DrawPath(m_path, ORANGE);
+            nodeMap.DrawPath(m_path, YELLOW, m_currentNode, m_currentNode); //draw path
         }
-        float stretch = 1 + glm::abs(glm::cos(m_step * 200.0f + 50)) * 0.15f;
-        float squash = 1 - (stretch) * 0.015f;
-
-        DrawTextPro(m_sprite,
-            Rectangle{ 0, 0, (float)m_sprite.width, (float)m_sprite.height },
-            Rectangle{ m_position.x, m_position.y, cellSize * squash, cellSize * stretch },
-            Vector2{ cellSize * squash * 0.5f, cellSize * stretch * 0.05f },
-            0, WHITE);*/
     }
 
     void PathAgent::SetNode(Node* node)
     {
-        m_currentNode = node;
-        m_position = node->position;
+        m_currentNode = node; //set node passed into function as current node
+        m_position = node->position; //set position of current node to position of node passed in
     }
 
     void PathAgent::SetSpeed(float speed)
     {
-        m_speed = speed;
+        m_speed = speed; //set speed
     }
 
+#pragma endregion
+
+    vector<Node*> DijkstrasSearch(Node* startNode, Node* endNode)
+    {
+        vector<Node*> emptyPath; // creat empty path to return
+
+        if (startNode == nullptr || endNode == nullptr) throw runtime_error("Both start and end node must be specified"); //if startNode is null OR endNode is null Raise Error
+
+        if (startNode == endNode) return emptyPath; //if startNode == endNode return empty Path
+
+        startNode->gScore = 0; // intialise gScore to 0;
+        startNode->previous = nullptr; //set parent to null 
+        
+        set<Node*> closedList; //Let closedList be a Set of Nodes
+        vector<Node*> openList;  //Let openList be a List of Nodes
+
+        openList.push_back(startNode); //Add startNode to openList
+           
+        while (!openList.empty()) //While openList is not empty 
+        {
+            sort(openList.begin(), openList.end(), //Sort openList by Node.gScore
+                [](Node* n1, Node* n2)
+                {
+                    return n1->gScore > n2->gScore;
+                });
+
+            Node* currentNode = openList.back(); //Set currrent node to first item in openList
+
+            if (currentNode == endNode) break; //Exit while loop if currentNOde == endNode
+
+            openList.pop_back(); //Remove currentNode from openList
+            closedList.insert(currentNode); //Add currentNode to closedList
+
+            for (Edge& c : currentNode->connections) //For all connections c in currentNode
+            {
+                if (closedList.count(c.target) == 0) //If c.target not in closedList
+                {
+                    float gScore = currentNode->gScore + c.cost;  // intitialise and set gScore = currentNode.gScore + c.cost
+
+                    if (find(openList.begin(), openList.end(), c.target) == openList.end()) //If c.target not in openList
+                    {
+                        c.target->gScore = gScore; //Let c.target.gScore = gScore
+                        c.target->previous = currentNode; //Let c.target.parent = currentNode
+                        openList.push_back(c.target); //Add c.target to openList
+                    }
+                    else if (gScore < c.target->gScore) //Else if (gScore < c.target.gScore)
+                    {
+                        c.target->gScore = gScore; //Let c.target.gScore = gScore
+                        c.target->previous = currentNode; //Let c.target.parent = currentNode
+                    }
+                }
+            }
+        }
+        vector<Node*> path; //Let Path be a list of Nodes
+        Node* currentNode = endNode; //Let currentNode = endNode
+
+        while (currentNode != nullptr) //While currentNode is not null
+        {
+            path.push_back(currentNode); //Add currentNode to beginning of Path
+            currentNode = currentNode->previous; //Let currentNode = currentNode.parent
+        }
+
+        reverse(path.begin(), path.end()); //Reverse path to correct order
+        return path;
+    }
 }
 
