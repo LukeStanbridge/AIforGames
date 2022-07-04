@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "Agent.h"
+//#include "Agent.h"
 using namespace std;
 
 namespace AIForGames
@@ -35,6 +35,7 @@ namespace AIForGames
         Node** m_nodes;
 
     public:
+        NodeMap();
         ~NodeMap();
         Node* GetNode(int x, int y) { return m_nodes[x + m_width * y]; }
         void Initialise(vector<string> asciiMap, int m_cellSize);
@@ -55,6 +56,7 @@ namespace AIForGames
 
     public:
         PathAgent(NodeMap& nodeMap);
+        PathAgent();
         void Update(float deltaTime);
         void GoToNode(Node* node);
         void Draw();

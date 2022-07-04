@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <glm/glm.hpp>
 #include "Pathfinding.h"
+#include "GotoPointBehaviour.h"
 #include "Agent.h"
 
 using namespace AIForGames;
@@ -45,6 +46,8 @@ int main(int argc, char* argv[])
     
     float time = (float)GetTime();
     float deltaTime;
+    
+    Agent wanderAgent(&nodeMap, new GotoPointBehaviour());
 
     while (!WindowShouldClose())
     {
@@ -57,6 +60,8 @@ int main(int argc, char* argv[])
             ClearBackground(BLACK);
 
             nodeMap.Draw();
+
+
 
             if (IsMouseButtonPressed(0))
             {

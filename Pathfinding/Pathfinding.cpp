@@ -18,6 +18,10 @@ namespace AIForGames
     }
 
 #pragma region NodeMap
+    NodeMap::NodeMap()
+    {
+    }
+
     NodeMap::~NodeMap() //destructor
     {
         for (int y = 0; y < m_height; y++)
@@ -145,6 +149,11 @@ namespace AIForGames
 #pragma region PathAgent
 
     PathAgent::PathAgent(NodeMap& nodeMap): nodeMap(nodeMap)
+    {
+
+    }
+
+    PathAgent::PathAgent(): nodeMap(nodeMap)
     {
 
     }

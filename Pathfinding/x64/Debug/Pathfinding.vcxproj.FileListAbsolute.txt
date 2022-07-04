@@ -1,1 +1,2 @@
 C:\Users\s213090\Documents\AIforGames\Pathfinding\x64\Debug\Pathfinding.exe
+C:\Users\s213090\Documents\GitHub\AIforGames\Pathfinding\x64\Debug\Pathfinding.exe

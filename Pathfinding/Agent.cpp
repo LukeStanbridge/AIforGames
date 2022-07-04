@@ -1,13 +1,28 @@
 #include "Agent.h"
+#include "Behaviour.h"
 
-Agent::Agent()
+namespace AIForGames
 {
-}
+	void Agent::Update(float deltaTime)
+	{
+		if (m_current)
+		{
+			m_current->Update(this, deltaTime);
+			m_pathAgent.Update(deltaTime);
+		}	
+	}
+	
+	void Agent::Draw()
+	{
+	}
 
-void Agent::Update(float deltaTime)
-{
-}
+	Agent::Agent()
+	{
+	}
 
-void Agent::Draw()
-{
+	void Agent::GoTo(glm::vec2 point)
+	{
+		Node* end = m_nodeMap->GetClosestNode(point);
+		m_pathAgent.GoToNode(end);
+	}
 }
