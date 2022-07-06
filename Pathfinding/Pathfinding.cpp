@@ -134,6 +134,18 @@ namespace AIForGames
         DrawCircle(((end->position.x + 0.5f) * 32), ((end->position.y + 0.5f) * 32), 8, RED);
     }
 
+    Node* NodeMap::GetRandomNode()
+    {
+        Node* node = nullptr;
+        while (node == nullptr)
+        {
+            int x = rand() % m_width;
+            int y = rand() % m_height;
+            node = GetNode(x, y);
+        }
+        return node;
+    }
+
     Node* NodeMap::GetClosestNode(glm::vec2 worldPos)
     {
         int i = (int)(worldPos.x / m_cellSize);
@@ -200,7 +212,7 @@ namespace AIForGames
 
     void PathAgent::Draw()
     {
-        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y +0.5f) * 32), 8, GREEN); //draw agent
+        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 8, GREEN); //draw agent
         if (!m_path.empty()) //if there is a path
         {
             nodeMap.DrawPath(m_path, YELLOW, m_currentNode, m_currentNode); //draw path
@@ -216,6 +228,11 @@ namespace AIForGames
     void PathAgent::SetSpeed(float speed)
     {
         m_speed = speed; //set speed
+    }
+
+    vector<Node*> PathAgent::GetPath()
+    {
+        return m_path;
     }
 
 #pragma endregion

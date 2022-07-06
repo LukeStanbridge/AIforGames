@@ -4,23 +4,30 @@
 
 namespace AIForGames
 {
+    // abstract base class for all actions
+    class Behaviour;
+
     class Agent
     {
-        // abstract base class for all actions
-        class Behaviour
-        {
-        public:
-            virtual void Update(Agent* agent, float deltaTime) = 0;
-        };
-
     public:
         Agent();
-        Agent(NodeMap* _nodeMap, Behaviour* _behaviour) : m_current(_behaviour), m_nodeMap(_nodeMap), m_color({ 255, 255, 0, 255 }) {}
+        Agent(NodeMap* _nodeMap, Behaviour* _behaviour) : m_current(_behaviour), m_pathAgent(*_nodeMap), m_nodeMap(_nodeMap), m_color({255, 255, 0, 255}) {}
         ~Agent() { delete m_current; }
         void GoTo(glm::vec2 point);
-
         void Update(float deltaTime);
+        void SetNode(Node* node);
+        void SetSpeed(float speed);
         void Draw();
+
+        // Wandering agent functions
+        bool PathComplete();
+        void GotToRandom();
+
+        // Follow player functions
+        void SetTarget(Agent* agent);
+        void GetTarget();
+        void GetPostion();
+        void GetNodeMap();
 
     private:
         PathAgent m_pathAgent;

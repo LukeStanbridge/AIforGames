@@ -2,8 +2,9 @@
 #include <raylib.h>
 #include <glm/glm.hpp>
 #include "Pathfinding.h"
-#include "GotoPointBehaviour.h"
+#include "Behaviour.h"
 #include "Agent.h"
+#include "Behaviour.h"
 
 using namespace AIForGames;
 using namespace std;
@@ -37,17 +38,23 @@ int main(int argc, char* argv[])
 
     Node* start = nodeMap.GetNode(1, 1); // start node
     Node* end = nodeMap.GetNode(10, 3); // end node
-    vector<Node*> nodeMapPath = DijkstrasSearch(start, end);
+    Node* random = nodeMap.GetRandomNode(); // random node
 
-    PathAgent agent(nodeMap);
+    Agent agent(&nodeMap, new GotoPointBehaviour());
     agent.SetNode(start);
-    agent.SetSpeed(5);
-    vector<Node*> agentPath = DijkstrasSearch(start, end);
+    agent.SetSpeed(10);
+
+    Agent agent2(&nodeMap, new WanderBehaviour());
+    agent2.SetNode(random);
+    agent2.SetSpeed(10);
+
+    Agent agent3(&nodeMap, new FollowBehaviour());
+    agent3.SetNode(nodeMap.GetRandomNode());
+    agent3.SetTarget(&agent);
+    agent3.SetSpeed(32);
     
     float time = (float)GetTime();
     float deltaTime;
-    
-    Agent wanderAgent(&nodeMap, new GotoPointBehaviour());
 
     while (!WindowShouldClose())
     {
@@ -61,20 +68,17 @@ int main(int argc, char* argv[])
 
             nodeMap.Draw();
 
-
-
-            if (IsMouseButtonPressed(0))
-            {
-                Vector2 mousePos = GetMousePosition();
-                end = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
-                if (end != nullptr)
-                {
-                    agent.GoToNode(end);
-                }
-            }
-          
+            // Click and go agent
             agent.Update(deltaTime);
             agent.Draw();
+
+            // Auto wandering agent
+            agent2.Update(deltaTime);
+            agent2.Draw();
+
+            // Followig agent
+            agent3.Update(deltaTime);
+            agent3.Draw();
 
             DrawFPS(10, 10);
 

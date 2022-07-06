@@ -1,3 +1,4 @@
 ﻿  main.cpp
-C:\Users\s213090\Documents\GitHub\AIforGames\Pathfinding\main.cpp(50,11): error C2371: 'agent': redefinition; different basic types
-C:\Users\s213090\Documents\GitHub\AIforGames\Pathfinding\main.cpp(42): message : see declaration of 'agent'
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
+C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
+  Pathfinding.vcxproj -> C:\Users\s213090\Documents\AIforGames\Pathfinding\x64\Debug\Pathfinding.exe

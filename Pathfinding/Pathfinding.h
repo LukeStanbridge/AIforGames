@@ -3,7 +3,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-//#include "Agent.h"
+#include <raylib.h>
+
 using namespace std;
 
 namespace AIForGames
@@ -38,6 +39,7 @@ namespace AIForGames
         NodeMap();
         ~NodeMap();
         Node* GetNode(int x, int y) { return m_nodes[x + m_width * y]; }
+        Node* GetRandomNode();
         void Initialise(vector<string> asciiMap, int m_cellSize);
         void Draw();
         void DrawPath(std::vector<Node*> path, Color lineColor, Node* start, Node* end);
@@ -62,6 +64,7 @@ namespace AIForGames
         void Draw();
         void SetNode(Node* node);
         void SetSpeed(float m_speed);
+        vector<Node*> GetPath();
     };
 
     vector<Node*> DijkstrasSearch(Node* startNode, Node* endNode);
