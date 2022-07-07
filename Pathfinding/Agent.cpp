@@ -18,6 +18,11 @@ namespace AIForGames
 		m_pathAgent.SetNode(node);
 	}
 
+	Node* Agent::GetNode()
+	{
+		return m_pathAgent.GetNode();
+	}
+
 	void Agent::SetSpeed(float speed)
 	{
 		m_pathAgent.SetSpeed(speed);
@@ -28,17 +33,30 @@ namespace AIForGames
 		m_pathAgent.Draw();
 	}
 
+	void Agent::DrawFollow()
+	{
+		m_pathAgent.DrawFollow(m_color);
+	}
+
 	Agent::Agent()
 	{
 	}
 
-	// wander functions
 	void Agent::GoTo(glm::vec2 point)
 	{
 		Node* end = m_nodeMap->GetClosestNode(point);
-		m_pathAgent.GoToNode(end);
+		if (end != nullptr)
+		{
+			m_pathAgent.GoToNode(end);
+		}
 	}
 
+	void Agent::GoTo(Node* node)
+	{
+		m_pathAgent.GoToNode(node);
+	}
+
+	// wander functions
 	void Agent::GotToRandom()
 	{
 		Node* random = m_nodeMap->GetRandomNode();
@@ -51,20 +69,33 @@ namespace AIForGames
 	}
 
 	// follow funtions
-	void Agent::SetTarget(Agent* agent)
+	void Agent::SetTarget(Agent* agent) // set target to follow
 	{
+		// use agent to set to a destination targets
+		target = agent;
 	}
 
-	void Agent::GetTarget()
+	Agent* Agent::GetTarget()
 	{
+		// get target from agent
+		return target;
 	}
 
-	void Agent::GetPostion()
+	glm::vec2 Agent::GetPosition()
 	{
+		return m_pathAgent.GetPosition();
 	}
 
-	void Agent::GetNodeMap()
+	NodeMap* Agent::GetNodeMap()
 	{
-
+		return m_nodeMap;
+	}
+	void Agent::Reset()
+	{
+		m_pathAgent.GetPath().clear();
+	}
+	void Agent::SetColor(Color color)
+	{
+		m_color = color;
 	}
 }

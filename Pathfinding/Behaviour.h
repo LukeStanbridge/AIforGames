@@ -6,7 +6,9 @@ namespace AIForGames
 	class Behaviour
 	{
 		public:
-		virtual void Update(Agent* agent, float deltaTime) = 0;
+			virtual void Enter(Agent* agent) {}
+			virtual void Update(Agent* agent, float deltaTime) = 0;
+			virtual void Exit(Agent* agent) {}
 	};
 
 	class GotoPointBehaviour : public Behaviour
@@ -26,7 +28,22 @@ namespace AIForGames
 	public:
 		virtual void Update(Agent* agent, float deltaTime);
 	private:
-		Vector2 lastTargetPosition;
+		glm::vec2 lastTargetPosition;
+	};
+
+	class SelectorBehaviour : public Behaviour
+	{
+	private:
+		Behaviour* m_b1;
+		Behaviour* m_b2;
+		Behaviour* m_selected;
+
+	public:
+		SelectorBehaviour(Behaviour* b1, Behaviour* b2) : m_b1(b1), m_b2(b2) {}
+		~SelectorBehaviour() { m_b1; m_b2; }
+		virtual void Update(Agent* agent, float deltaTime);
+		void SetBehaviour(Behaviour* b, Agent* agent);
+		
 	};
 }
 

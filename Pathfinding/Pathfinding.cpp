@@ -156,6 +156,10 @@ namespace AIForGames
 
         return GetNode(i, j);
     }
+    int NodeMap::GetCellSize()
+    {
+        return m_cellSize;
+    }
 #pragma endregion
 
 #pragma region PathAgent
@@ -219,6 +223,11 @@ namespace AIForGames
         }
     }
 
+    void PathAgent::DrawFollow(Color m_color)
+    {
+        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 12, m_color); //draw agent
+    }
+
     void PathAgent::SetNode(Node* node)
     {
         m_currentNode = node; //set node passed into function as current node
@@ -233,6 +242,16 @@ namespace AIForGames
     vector<Node*> PathAgent::GetPath()
     {
         return m_path;
+    }
+
+    glm::vec2 PathAgent::GetPosition()
+    {
+        return m_position;
+    }
+
+    Node* PathAgent::GetNode()
+    {
+        return m_currentNode;
     }
 
 #pragma endregion

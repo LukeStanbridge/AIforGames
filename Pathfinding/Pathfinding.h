@@ -44,6 +44,7 @@ namespace AIForGames
         void Draw();
         void DrawPath(std::vector<Node*> path, Color lineColor, Node* start, Node* end);
         Node* GetClosestNode(glm::vec2 worldPos);
+        int GetCellSize();
     };
 
     class PathAgent
@@ -62,9 +63,12 @@ namespace AIForGames
         void Update(float deltaTime);
         void GoToNode(Node* node);
         void Draw();
+        void DrawFollow(Color m_color);
         void SetNode(Node* node);
+        Node* GetNode();
         void SetSpeed(float m_speed);
         vector<Node*> GetPath();
+        glm::vec2 GetPosition();
     };
 
     vector<Node*> DijkstrasSearch(Node* startNode, Node* endNode);
