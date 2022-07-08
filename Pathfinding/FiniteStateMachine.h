@@ -20,6 +20,7 @@ namespace AIForGames
         virtual ~FiniteStateMachine();
 
         void Update(Agent* agent, float deltaTime);
+        void AddState(State* state);
     };
 }
 

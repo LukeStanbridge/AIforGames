@@ -5,6 +5,9 @@
 #include "Behaviour.h"
 #include "Agent.h"
 #include "Behaviour.h"
+#include "Condition.h"
+#include "State.h"
+#include "FiniteStateMachine.h"
 
 using namespace AIForGames;
 using namespace std;
@@ -36,6 +39,23 @@ int main(int argc, char* argv[])
     asciiMap.push_back("111111111111111111111111111111111111111111111111");
     nodeMap.Initialise(asciiMap, 32);
 
+    // set up a FSM, we're going to have two states with their own conditions
+    DistanceCondition* closerThan5 = new DistanceCondition(5.0f, true);
+    DistanceCondition* furtherThan7 = new DistanceCondition(7.0f, false);
+
+    // register these states with the FSM, so its responsible for deleting them now
+    State* wanderState = new State(new WanderBehaviour());
+    State* followState = new State(new FollowBehaviour());
+    wanderState->AddTransition(closerThan5, followState);
+    followState->AddTransition(furtherThan7, wanderState);
+
+    // make a finite state machine that starts off wandering
+    FiniteStateMachine* fsm = new FiniteStateMachine(wanderState);
+    fsm->AddState(wanderState);
+    fsm->AddState(followState);
+
+    
+
     Node* start = nodeMap.GetNode(1, 1); // start node
     Node* end = nodeMap.GetNode(10, 3); // end node
 
@@ -47,10 +67,15 @@ int main(int argc, char* argv[])
     agent2.SetNode(nodeMap.GetRandomNode());
     agent2.SetSpeed(10);
 
-    Agent agent3(&nodeMap, new SelectorBehaviour(new FollowBehaviour(), new WanderBehaviour())); // wander/follow agent
+    Agent agent3(&nodeMap, fsm);
     agent3.SetNode(nodeMap.GetRandomNode());
     agent3.SetTarget(&agent);
     agent3.SetSpeed(5);
+
+    //Agent agent3(&nodeMap, new SelectorBehaviour(new FollowBehaviour(), new WanderBehaviour())); // wander/follow agent
+    //agent3.SetNode(nodeMap.GetRandomNode());
+    //agent3.SetTarget(&agent);
+    //agent3.SetSpeed(5);
     
     float time = (float)GetTime();
     float deltaTime;

@@ -16,11 +16,10 @@ namespace AIForGames
             Condition* condition;
             State* targetState;
         };
-        void GetTransitions();
 
     private:
-        std::vector<Behaviour*> m_behaviours;
-        std::vector<Transition> m_transitions;
+        vector<Behaviour*> m_behaviours;
+        vector<Transition> m_transitions;
 
     public:
         State();
@@ -28,6 +27,8 @@ namespace AIForGames
         virtual void Enter(Agent* agent);
         virtual void Update(Agent* agent, float deltaTime);
         virtual void Exit(Agent* agent);
+        vector<Transition> GetTransitions();
+        void AddTransition(DistanceCondition* condition, State* targetState);
     };
 }
 

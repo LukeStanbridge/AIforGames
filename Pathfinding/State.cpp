@@ -3,10 +3,6 @@
 
 namespace AIForGames
 {
-    void State::GetTransitions()
-    {
-        m_transitions;
-    }
     State::~State()
     {
         // we own the behaviours assigned to us

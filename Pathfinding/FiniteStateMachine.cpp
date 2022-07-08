@@ -31,4 +31,7 @@ namespace AIForGames
         // update the current state
         m_currentState->Update(agent, deltaTime);
     }
+    void FiniteStateMachine::AddState(State* state)
+    {
+    }
 }

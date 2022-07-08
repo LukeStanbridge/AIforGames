@@ -37,7 +37,6 @@ namespace AIForGames
         void SetColor(Color color);
 
     private:
-        glm::vec2 lastTargetPosition;
         PathAgent m_pathAgent;
         Behaviour* m_current;
         NodeMap* m_nodeMap;
