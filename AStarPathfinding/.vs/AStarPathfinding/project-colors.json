@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "c7f04f26-d3c3-4d84-9345-71dc4f2ae135": {
+      "ProjectGuid": "c7f04f26-d3c3-4d84-9345-71dc4f2ae135",
+      "DisplayName": "AStarPathfinding",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

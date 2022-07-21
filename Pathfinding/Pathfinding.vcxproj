@@ -149,7 +149,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="State.cpp" />
-    <ClCompile Include="Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
@@ -158,7 +157,6 @@
     <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="Pathfinding.h" />
     <ClInclude Include="State.h" />
-    <ClInclude Include="Transition.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

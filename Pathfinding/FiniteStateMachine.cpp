@@ -1,4 +1,6 @@
 #include "FiniteStateMachine.h"
+#include "Agent.h"
+#include "State.h"
 
 namespace AIForGames
 {
@@ -7,6 +9,11 @@ namespace AIForGames
         // the FSM owns every State assigned to it
         for (State* s : m_states)
             delete s;
+    }
+
+    void FiniteStateMachine::Enter(Agent* agent)
+    {
+        m_currentState->Enter(agent);
     }
 
     void FiniteStateMachine::Update(Agent* agent, float deltaTime)

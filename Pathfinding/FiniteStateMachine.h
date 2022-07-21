@@ -1,7 +1,5 @@
-#pragma once
-#include <vector>
-#include "State.h"
 #include "Behaviour.h"
+#include "State.h"
 
 using namespace std;
 
@@ -18,7 +16,7 @@ namespace AIForGames
     public:
         FiniteStateMachine(State* s) : m_currentState(s), m_newState(nullptr) {}
         virtual ~FiniteStateMachine();
-
+        void Enter(Agent* agent);
         void Update(Agent* agent, float deltaTime);
         void AddState(State* state);
     };

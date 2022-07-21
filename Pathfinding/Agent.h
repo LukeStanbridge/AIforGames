@@ -6,12 +6,12 @@ namespace AIForGames
 {
     // abstract base class for all actions
     class Behaviour;
+    class Condition;
 
     class Agent
     {
     public:
-        Agent();
-        Agent(NodeMap* _nodeMap, Behaviour* _behaviour) : m_current(_behaviour), m_pathAgent(*_nodeMap), m_nodeMap(_nodeMap), m_color(m_color) {}
+        Agent(NodeMap* _nodeMap, Behaviour* _behaviour);
         ~Agent() { delete m_current; }
         void GoTo(glm::vec2 point);
         void GoTo(Node* node);
@@ -42,5 +42,6 @@ namespace AIForGames
         NodeMap* m_nodeMap;
         Color m_color;
         Agent* target;
+        
     };
 }

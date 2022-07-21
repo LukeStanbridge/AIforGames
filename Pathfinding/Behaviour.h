@@ -6,6 +6,8 @@ namespace AIForGames
 	class Behaviour
 	{
 		public:
+			Behaviour();
+			~Behaviour() {}
 			virtual void Enter(Agent* agent) {}
 			virtual void Update(Agent* agent, float deltaTime) = 0;
 			virtual void Exit(Agent* agent) {}
@@ -26,6 +28,7 @@ namespace AIForGames
 	class FollowBehaviour : public Behaviour
 	{
 	public:
+		void Enter(Agent* agent);
 		virtual void Update(Agent* agent, float deltaTime);
 	private:
 		glm::vec2 lastTargetPosition;
@@ -39,7 +42,7 @@ namespace AIForGames
 		Behaviour* m_selected;
 
 	public:
-		SelectorBehaviour(Behaviour* b1, Behaviour* b2) : m_b1(b1), m_b2(b2) {}
+		SelectorBehaviour(Behaviour* b1, Behaviour* b2);
 		~SelectorBehaviour() { m_b1; m_b2; }
 		virtual void Update(Agent* agent, float deltaTime);
 		void SetBehaviour(Behaviour* b, Agent* agent);

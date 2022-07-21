@@ -4,8 +4,14 @@ namespace AIForGames
 {
 	bool DistanceCondition::IsTrue(Agent* agent)
 	{
+		SetColour(agent);
 		float dist = glm::distance(agent->GetPosition(), agent->GetTarget()->GetPosition());
 		return (dist < m_distance) == m_lessThan;
+	}
+	void DistanceCondition::SetColour(Agent* agent)
+	{
+		if (m_lessThan) agent->SetColor(ORANGE);
+		else agent->SetColor(SKYBLUE);
 	}
 }
 

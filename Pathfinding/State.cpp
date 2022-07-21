@@ -3,6 +3,10 @@
 
 namespace AIForGames
 {
+    State::State(Behaviour* behaviour)
+    {
+        m_behaviours.push_back(behaviour);
+    }
     State::~State()
     {
         // we own the behaviours assigned to us
@@ -15,9 +19,26 @@ namespace AIForGames
             delete t.condition;
     }
 
+    void State::Enter(Agent* agent)
+    {
+    }
+
     void State::Update(Agent* agent, float deltaTime)
     {
         for (Behaviour* b : m_behaviours)
             b->Update(agent, deltaTime);
+    }
+    void State::Exit(Agent* agent)
+    {
+    }
+
+    vector<State::Transition> State::GetTransitions()
+    {
+        return m_transitions;
+    }
+
+    void State::AddTransition(DistanceCondition* condition, State* targetState)
+    {
+        
     }
 }

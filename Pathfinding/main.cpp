@@ -4,7 +4,6 @@
 #include "Pathfinding.h"
 #include "Behaviour.h"
 #include "Agent.h"
-#include "Behaviour.h"
 #include "Condition.h"
 #include "State.h"
 #include "FiniteStateMachine.h"
@@ -54,8 +53,6 @@ int main(int argc, char* argv[])
     fsm->AddState(wanderState);
     fsm->AddState(followState);
 
-    
-
     Node* start = nodeMap.GetNode(1, 1); // start node
     Node* end = nodeMap.GetNode(10, 3); // end node
 
@@ -71,11 +68,7 @@ int main(int argc, char* argv[])
     agent3.SetNode(nodeMap.GetRandomNode());
     agent3.SetTarget(&agent);
     agent3.SetSpeed(5);
-
-    //Agent agent3(&nodeMap, new SelectorBehaviour(new FollowBehaviour(), new WanderBehaviour())); // wander/follow agent
-    //agent3.SetNode(nodeMap.GetRandomNode());
-    //agent3.SetTarget(&agent);
-    //agent3.SetSpeed(5);
+    agent3.SetColor(MAGENTA);
     
     float time = (float)GetTime();
     float deltaTime;
@@ -104,13 +97,11 @@ int main(int argc, char* argv[])
             agent3.Update(deltaTime);
             agent3.DrawFollow();
 
-            //DrawFPS(10, 10);
-
         EndDrawing();
     }
- 
     CloseWindow();
-
     return 0;
-
 }
+
+// not transitioning to follow
+// set colours correctly

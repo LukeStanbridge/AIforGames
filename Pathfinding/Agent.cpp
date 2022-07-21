@@ -1,9 +1,15 @@
 #include "Agent.h"
 #include "Behaviour.h"
+#include "Condition.h"
 #include <vector>
 
 namespace AIForGames
 {
+	Agent::Agent(NodeMap* _nodeMap, Behaviour* _behaviour) : m_current(_behaviour), m_pathAgent(*_nodeMap), m_nodeMap(_nodeMap), m_color(m_color)
+	{
+		m_current->Enter(this);
+	}
+
 	void Agent::Update(float deltaTime)
 	{
 		if (m_current)
@@ -36,10 +42,6 @@ namespace AIForGames
 	void Agent::DrawFollow()
 	{
 		m_pathAgent.DrawFollow(m_color);
-	}
-
-	Agent::Agent()
-	{
 	}
 
 	void Agent::GoTo(glm::vec2 point)

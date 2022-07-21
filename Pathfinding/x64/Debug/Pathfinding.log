@@ -1,11 +1,5 @@
 ﻿  main.cpp
 C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
 C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
-C:\Users\s213090\Documents\AIforGames\Pathfinding\main.cpp(47,58): error C2664: 'AIForGames::State::State(const AIForGames::State &)': cannot convert argument 1 from 'AIForGames::WanderBehaviour *' to 'const AIForGames::State &'
-C:\Users\s213090\Documents\AIforGames\Pathfinding\main.cpp(47,58): message : Reason: cannot convert from 'AIForGames::WanderBehaviour *' to 'const AIForGames::State'
-C:\Users\s213090\Documents\AIforGames\Pathfinding\main.cpp(47,58): message : No constructor could take the source type, or constructor overload resolution was ambiguous
-C:\Users\s213090\Documents\AIforGames\Pathfinding\State.h(32,5): message : see declaration of 'AIForGames::State::State'
-C:\Users\s213090\Documents\AIforGames\Pathfinding\main.cpp(48,58): error C2664: 'AIForGames::State::State(const AIForGames::State &)': cannot convert argument 1 from 'AIForGames::FollowBehaviour *' to 'const AIForGames::State &'
-C:\Users\s213090\Documents\AIforGames\Pathfinding\main.cpp(48,58): message : Reason: cannot convert from 'AIForGames::FollowBehaviour *' to 'const AIForGames::State'
-C:\Users\s213090\Documents\AIforGames\Pathfinding\main.cpp(48,58): message : No constructor could take the source type, or constructor overload resolution was ambiguous
-C:\Users\s213090\Documents\AIforGames\Pathfinding\State.h(32,5): message : see declaration of 'AIForGames::State::State'
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Pathfinding.vcxproj -> C:\Users\s213090\Documents\AIforGames\Pathfinding\x64\Debug\Pathfinding.exe

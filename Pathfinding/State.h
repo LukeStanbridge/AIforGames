@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+
 #include "Agent.h"
 #include "Condition.h"
 using namespace std;
@@ -22,7 +22,7 @@ namespace AIForGames
         vector<Transition> m_transitions;
 
     public:
-        State();
+        State(Behaviour* behaviour);
         ~State();
         virtual void Enter(Agent* agent);
         virtual void Update(Agent* agent, float deltaTime);

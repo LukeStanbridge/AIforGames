@@ -21,6 +21,11 @@ namespace AIForGames
         }
     }
 
+    void FollowBehaviour::Enter(Agent* agent)
+    {
+        agent->Reset();
+    }
+
     void FollowBehaviour::Update(Agent* agent, float deltaTime)
     {
         // check if the agent has moved significantly from its last position
@@ -35,6 +40,12 @@ namespace AIForGames
             lastTargetPosition = targetAgent->GetPosition();
             agent->GoTo(targetAgent->GetNode());
         }
+    }
+
+    SelectorBehaviour::SelectorBehaviour(Behaviour* b1, Behaviour* b2)
+    {
+        m_b1 = b1;
+        m_b2 = b2;
     }
 
     void SelectorBehaviour::Update(Agent* agent, float deltaTime)
@@ -62,5 +73,8 @@ namespace AIForGames
             m_selected = b;
             agent->Reset();
         }
+    }
+    Behaviour::Behaviour()
+    {
     }
 }
