@@ -24,6 +24,8 @@ namespace AIForGames
         Node(float x, float y);
         glm::vec2 position;
         float gScore;
+        float hScore;
+        float fScore;
         Node* previous;
         vector<Edge> connections;
         void ConnectTo(Node* other, float cost);
@@ -45,6 +47,9 @@ namespace AIForGames
         void DrawPath(std::vector<Node*> path, Color lineColor, Node* start, Node* end);
         Node* GetClosestNode(glm::vec2 worldPos);
         int GetCellSize();
+        /*bool IsVisibleFrom(Node* start, Node* end);
+        glm::vec2 LocalToWorld(const glm::vec2 local);
+        vector<Node*> SmoothPath(vector<Node*> path);*/
     };
 
     class PathAgent
@@ -56,21 +61,26 @@ namespace AIForGames
         Node* m_currentNode;
         NodeMap& nodeMap;
         float m_speed;
+        int m_searchType;
+        string m_search;
 
     public:
         PathAgent(NodeMap& nodeMap);
         PathAgent();
         void Update(float deltaTime);
         void GoToNode(Node* node);
-        void Draw();
+        void Draw(Color colour);
         void DrawFollow(Color m_color);
         void SetNode(Node* node);
         Node* GetNode();
         void SetSpeed(float m_speed);
         vector<Node*> GetPath();
         glm::vec2 GetPosition();
+        void SetSearchType(int searchType);
     };
 
     vector<Node*> DijkstrasSearch(Node* startNode, Node* endNode);
+    float Heuristic(Node* target, Node* endNode);
+    vector<Node*> AStarSearch(Node* startNode, Node* endNode);
 }
 

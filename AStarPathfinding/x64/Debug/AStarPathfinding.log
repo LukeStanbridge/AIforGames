@@ -1,1 +1,88 @@
-﻿  AStarPathfinding.vcxproj -> C:\Users\s213090\Documents\AIforGames\AStarPathfinding\x64\Debug\AStarPathfinding.exe
+﻿  Agent.cpp
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
+  Behaviour.cpp
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
+  Pathfinding.cpp
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(44,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(45,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(62,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(62,87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(132,159): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(132,116): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(132,73): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(132,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(147,163): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(147,124): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(147,85): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(147,46): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(149,83): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(149,48): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(150,79): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(150,46): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(243,73): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(243,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(259,73): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Pathfinding.cpp(259,43): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+  main.cpp
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
+C:\Users\s213090\Documents\AIforGames\AStarPathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
+  Generating Code...
+  AStarPathfinding.vcxproj -> C:\Users\s213090\Documents\AIforGames\AStarPathfinding\x64\Debug\AStarPathfinding.exe

@@ -39,6 +39,6 @@ namespace AIForGames
 
     void State::AddTransition(DistanceCondition* condition, State* targetState)
     {
-        
+        m_transitions.push_back(Transition{ condition, targetState });
     }
 }

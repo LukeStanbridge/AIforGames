@@ -7,6 +7,13 @@ namespace AIForGames
         // read mouse clicks
         if (IsMouseButtonPressed(0))
         {
+            agent->SetSearchType(1);
+            Vector2 mousePos = GetMousePosition();
+            agent->GoTo(glm::vec2(mousePos.x, mousePos.y));
+        }
+        else if (IsMouseButtonPressed(1))
+        {
+            agent->SetSearchType(2);
             Vector2 mousePos = GetMousePosition();
             agent->GoTo(glm::vec2(mousePos.x, mousePos.y));
         }

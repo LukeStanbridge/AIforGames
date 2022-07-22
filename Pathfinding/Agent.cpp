@@ -1,3 +1,4 @@
+#pragma once
 #include "Agent.h"
 #include "Behaviour.h"
 #include "Condition.h"
@@ -33,10 +34,23 @@ namespace AIForGames
 	{
 		m_pathAgent.SetSpeed(speed);
 	}
+
+	void Agent::SetSearchType(int searchType)
+	{
+		m_searchType = searchType;
+	}
 	
 	void Agent::Draw()
 	{
-		m_pathAgent.Draw();
+		if (m_searchType == 1)
+		{
+			m_pathAgent.Draw(GREEN);
+		}
+		else if (m_searchType == 2)
+		{
+			m_pathAgent.Draw(MAGENTA);
+		}
+		else m_pathAgent.Draw(YELLOW);
 	}
 
 	void Agent::DrawFollow()
@@ -46,6 +60,7 @@ namespace AIForGames
 
 	void Agent::GoTo(glm::vec2 point)
 	{
+		m_pathAgent.SetSearchType(m_searchType);
 		Node* end = m_nodeMap->GetClosestNode(point);
 		if (end != nullptr)
 		{

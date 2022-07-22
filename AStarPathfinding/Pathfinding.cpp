@@ -176,27 +176,6 @@ namespace AIForGames
     {
         return m_cellSize;
     }
-    //bool NodeMap::IsVisibleFrom(Node* start, Node* end)
-    //{
-    //    //// calculate a vector from start to end that is one cellsize in length
-    //    //Vector2 delta = Vector2Subtract(end->position, start->position);
-    //    //float distance = Vector2Distance(end->position, start->position);
-    //    //delta = Vector2Scale(delta, m_cellSize / distance);
-
-    //    //// step forward in that direction one cell at a time from start towards end
-    //    //for (float cells = 1.0f; cells < distance / m_cellSize; cells += 1.0f)
-    //    //{
-    //    //    Vector2 testPosition = Vector2Add(start->position,
-    //    //        Vector2Scale(delta, cells));
-    //    //    // if the square below in unpassable, then we don’t have line of sight          
-    //    //    // from start to end
-    //    //    if (GetClosestNode(testPosition) == nullptr)
-    //    //        return false;
-    //    //}
-
-    //    //// we've travelled the whole path without hitting an obstacle!
-    //    //return true;
-    //}
 #pragma endregion
 
 #pragma region PathAgent

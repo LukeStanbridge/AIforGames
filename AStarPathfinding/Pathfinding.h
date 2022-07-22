@@ -47,7 +47,6 @@ namespace AIForGames
         void DrawPath(std::vector<Node*> path, Color lineColor, Node* start, Node* end);
         Node* GetClosestNode(glm::vec2 worldPos);
         int GetCellSize();
-        /*bool IsVisibleFrom(Node* start, Node* end);*/
     };
 
     class PathAgent

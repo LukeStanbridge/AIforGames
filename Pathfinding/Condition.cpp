@@ -10,8 +10,8 @@ namespace AIForGames
 	}
 	void DistanceCondition::SetColour(Agent* agent)
 	{
-		if (m_lessThan) agent->SetColor(ORANGE);
-		else agent->SetColor(SKYBLUE);
+		if (m_lessThan) agent->SetColor(SKYBLUE);
+		else agent->SetColor(ORANGE);
 	}
 }
 

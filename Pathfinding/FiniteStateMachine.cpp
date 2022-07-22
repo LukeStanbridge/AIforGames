@@ -40,5 +40,6 @@ namespace AIForGames
     }
     void FiniteStateMachine::AddState(State* state)
     {
+        m_states.push_back(state);
     }
 }

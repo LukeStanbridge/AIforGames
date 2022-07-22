@@ -146,8 +146,8 @@ namespace AIForGames
             end = path[i + 1];
             DrawLine(((a->position.x + 0.5f) * m_cellSize), ((a->position.y + 0.5f) * m_cellSize), ((b->position.x + 0.5f) * m_cellSize), ((b->position.y + 0.5f) * m_cellSize), lineColor);
         }
-        DrawCircle(((start->position.x + 0.5f) * 32), ((start->position.y + 0.5f) * 32), 8, BLUE);
-        DrawCircle(((end->position.x + 0.5f) * 32), ((end->position.y + 0.5f) * 32), 8, RED);
+        DrawCircle(((start->position.x + 0.5f) * 32), ((start->position.y + 0.5f) * 32), 4, BLUE);
+        DrawCircle(((end->position.x + 0.5f) * 32), ((end->position.y + 0.5f) * 32), 4, RED);
     }
 
     Node* NodeMap::GetRandomNode()
@@ -176,6 +176,51 @@ namespace AIForGames
     {
         return m_cellSize;
     }
+    //bool NodeMap::IsVisibleFrom(Node* start, Node* end)
+    //{
+    //    // calculate a vector from start to end that is one cellsize in length
+    //    glm::vec2 delta = end->position - start->position;
+    //    float distance = glm::distance(end->position, start->position);
+    //    delta /= distance;
+
+    //    // step forward in that direction one cell at a time from start towards end
+    //    for (float cells = 0.5f; cells < distance; cells += 0.5f)
+    //    {
+    //        glm::vec2 testPosition = start->position + delta * cells;
+    //        // if the square below in unpassable, then we don’t have line of sight          
+    //        // from start to end
+    //        if (GetClosestNode(LocalToWorld(testPosition)) == nullptr)
+    //            return false;
+    //    }
+
+    //    // we've travelled the whole path without hitting an obstacle!
+    //    return true;
+    //}
+
+    //glm::vec2 NodeMap::LocalToWorld(const glm::vec2 local)
+    //{
+    //    return local + 0.5f /** m_cellSize)*/;
+    //}
+
+    //std::vector<Node*> NodeMap::SmoothPath(std::vector<Node*> path)
+    //{
+    //    if (path.size() <= 2) return path;
+
+    //    vector<Node*> smoothPath;
+    //    smoothPath.push_back(path.front());
+    //    Node* prev = path.front();
+
+    //    for (int i = 1; i < path.size(); i++)
+    //    {
+    //        if (!IsVisibleFrom(prev, path[i]))
+    //        {
+    //            smoothPath.push_back(path[i - 1]);
+    //            prev = path[i - 1];
+    //        }
+    //    }
+    //    if (path.back() != smoothPath.back()) smoothPath.push_back(path.back());
+    //    return smoothPath;
+    //}
 #pragma endregion
 
 #pragma region PathAgent
@@ -226,22 +271,53 @@ namespace AIForGames
 
     void PathAgent::GoToNode(Node* node)
     {
-        m_path = DijkstrasSearch(m_currentNode, node);
-        m_currentIndex = 0;
+        if (m_searchType == 1)
+        {
+            m_path = DijkstrasSearch(m_currentNode, node);
+           /* m_path = nodeMap.SmoothPath(m_path);*/
+            m_currentIndex = 0;
+        }
+        else
+        {
+            m_path = AStarSearch(m_currentNode, node);
+           /* m_path = nodeMap.SmoothPath(m_path);*/
+            m_currentIndex = 0;
+        }
     }
 
-    void PathAgent::Draw()
+    void PathAgent::Draw(Color colour)
     {
-        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 8, GREEN); //draw agent
+        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 8, colour); //draw agent
         if (!m_path.empty()) //if there is a path
         {
             nodeMap.DrawPath(m_path, YELLOW, m_currentNode, m_currentNode); //draw path
         }
+
+        if (m_searchType == 1)
+        {
+            m_search = "Dijkstras";
+            DrawCircle(70, 525, 8, GREEN); 
+        }
+        else if (m_searchType == 2)
+        {
+            m_search = "A Star";
+            DrawCircle(70, 525, 8, MAGENTA);
+        }
+
+        const char* c = m_search.c_str();
+        DrawText(c, 100, 500, 50, WHITE); //draw search type text
+
+        DrawCircle(70, 625, 8, YELLOW);
+        DrawText("Random Wanderer", 100, 600, 50, WHITE);
+        
     }
 
     void PathAgent::DrawFollow(Color m_color)
     {
         DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 12, m_color); //draw agent
+
+        DrawCircle(70, 725, 8, m_color);
+        DrawText("Wander/Follower", 100, 700, 50, WHITE);
     }
 
     void PathAgent::SetNode(Node* node)
@@ -268,6 +344,11 @@ namespace AIForGames
     Node* PathAgent::GetNode()
     {
         return m_currentNode;
+    }
+
+    void PathAgent::SetSearchType(int searchType)
+    {
+        m_searchType = searchType;
     }
 
 #pragma endregion
@@ -319,6 +400,81 @@ namespace AIForGames
                     {
                         c.target->gScore = gScore; //Let c.target.gScore = gScore
                         c.target->previous = currentNode; //Let c.target.parent = currentNode
+                    }
+                }
+            }
+        }
+        vector<Node*> path; //Let Path be a list of Nodes
+        Node* currentNode = endNode; //Let currentNode = endNode
+
+        while (currentNode != nullptr) //While currentNode is not null
+        {
+            path.push_back(currentNode); //Add currentNode to beginning of Path
+            currentNode = currentNode->previous; //Let currentNode = currentNode.parent
+        }
+
+        reverse(path.begin(), path.end()); //Reverse path to correct order
+        return path;
+    }
+    float Heuristic(Node* target, Node* endNode)
+    {
+        float h = (float)sqrt((target->position.x - endNode->position.x) * (target->position.x - endNode->position.x)
+            + (target->position.y - endNode->position.y) * (target->position.y - endNode->position.y));
+        return h;
+    }
+    vector<Node*> AStarSearch(Node* startNode, Node* endNode)
+    {
+        // validate input
+        vector<Node*> emptyPath;
+        if (startNode == nullptr || endNode == nullptr) throw runtime_error("Both start and end node must be specified");
+        if (startNode == endNode) return emptyPath;
+
+        // initiialise starting node
+        startNode->gScore = 0;
+        startNode->previous = nullptr;
+
+        // creat temp lists for storing nodes we're visiting/visited
+        set<Node*> closedList;
+        vector<Node*> openList;
+
+        //Add startNode to openList
+        openList.push_back(startNode);
+
+        while (!openList.empty()) //While openList is not empty 
+        {
+            sort(openList.begin(), openList.end(), //Sort openList by Node.gScore
+                [](Node* n1, Node* n2)
+                {
+                    return n1->fScore > n2->fScore;
+                });
+
+            Node* currentNode = openList.back(); //Set currrent node to first item in openList
+
+            if (currentNode == endNode) break; //Exit while loop if currentNode == endNode
+
+            openList.pop_back(); //Remove currentNode from openList
+            closedList.insert(currentNode); //Add currentNode to closedList
+
+            for (Edge& c : currentNode->connections) //For all connections c in currentNode
+            {
+                if (closedList.count(c.target) == 0) //If c.target not in closedList
+                {
+                    float gScore = currentNode->gScore + c.cost;  // intitialise and set gScore = currentNode.gScore + c.cost
+                    float hScore = Heuristic(c.target, endNode);
+                    float fScore = gScore + hScore;
+
+                    if (find(openList.begin(), openList.end(), c.target) == openList.end()) //If c.target not in openList
+                    {
+                        c.target->gScore = gScore;
+                        c.target->fScore = fScore;
+                        c.target->previous = currentNode;
+                        openList.push_back(c.target);
+                    }
+                    else if (fScore < c.target->fScore)
+                    {
+                        c.target->gScore = gScore;
+                        c.target->fScore = fScore;
+                        c.target->previous = currentNode;
                     }
                 }
             }

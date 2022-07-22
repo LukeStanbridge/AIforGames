@@ -19,6 +19,7 @@ namespace AIForGames
         void SetNode(Node* node);
         Node* GetNode();
         void SetSpeed(float speed);
+        void SetSearchType(int searchType);
         void Draw();
         void DrawFollow();
 
@@ -42,6 +43,6 @@ namespace AIForGames
         NodeMap* m_nodeMap;
         Color m_color;
         Agent* target;
-        
+        int m_searchType;
     };
 }
