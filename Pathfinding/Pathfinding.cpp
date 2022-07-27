@@ -292,32 +292,11 @@ namespace AIForGames
         {
             nodeMap.DrawPath(m_path, YELLOW, m_currentNode, m_currentNode); //draw path
         }
-
-        if (m_searchType == 1)
-        {
-            m_search = "Dijkstras";
-            DrawCircle(70, 525, 8, GREEN); 
-        }
-        else if (m_searchType == 2)
-        {
-            m_search = "A Star";
-            DrawCircle(70, 525, 8, MAGENTA);
-        }
-
-        const char* c = m_search.c_str();
-        DrawText(c, 100, 500, 50, WHITE); //draw search type text
-
-        DrawCircle(70, 625, 8, YELLOW);
-        DrawText("Random Wanderer", 100, 600, 50, WHITE);
-        
     }
 
     void PathAgent::DrawFollow(Color m_color)
     {
         DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 12, m_color); //draw agent
-
-        DrawCircle(70, 725, 8, m_color);
-        DrawText("Wander/Follower", 100, 700, 50, WHITE);
     }
 
     void PathAgent::SetNode(Node* node)

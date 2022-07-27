@@ -26,6 +26,7 @@ namespace AIForGames
         // Wandering agent functions
         bool PathComplete();
         void GotToRandom();
+        void FleeToRandom(glm::vec2 playerPos);
 
         // Follow player functions
         void SetTarget(Agent* agent);

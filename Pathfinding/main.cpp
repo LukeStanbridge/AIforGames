@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <raylib.h>
 #include <glm/glm.hpp>
@@ -40,18 +41,29 @@ int main(int argc, char* argv[])
 
     // set up a FSM, we're going to have two states with their own conditions
     DistanceCondition* closerThan5 = new DistanceCondition(5.0f, true);
+    DistanceCondition* furtherThan5 = new DistanceCondition(5.1f, false);
     DistanceCondition* furtherThan7 = new DistanceCondition(7.0f, false);
 
     // register these states with the FSM, so its responsible for deleting them now
+    State* runWanderState = new State(new WanderBehaviour());
     State* wanderState = new State(new WanderBehaviour());
     State* followState = new State(new FollowBehaviour());
+    State* fleeState = new State(new FleeBehaviour());
+    
     wanderState->AddTransition(closerThan5, followState);
     followState->AddTransition(furtherThan7, wanderState);
+
+    runWanderState->AddTransition(closerThan5, fleeState);
+    fleeState->AddTransition(furtherThan5, runWanderState);
 
     // make a finite state machine that starts off wandering
     FiniteStateMachine* fsm = new FiniteStateMachine(wanderState);
     fsm->AddState(wanderState);
     fsm->AddState(followState);
+
+    FiniteStateMachine* fsm2 = new FiniteStateMachine(runWanderState);
+    fsm2->AddState(runWanderState);
+    fsm2->AddState(fleeState);
 
     Node* start = nodeMap.GetNode(1, 1); // start node
     Node* end = nodeMap.GetNode(10, 3); // end node
@@ -64,11 +76,15 @@ int main(int argc, char* argv[])
     agent2.SetNode(nodeMap.GetRandomNode());
     agent2.SetSpeed(10);
 
-    Agent agent3(&nodeMap, fsm);
+    Agent agent3(&nodeMap, fsm); // fsm wander/follow agent
     agent3.SetNode(nodeMap.GetRandomNode());
     agent3.SetTarget(&agent);
-    agent3.SetSpeed(5);
-    agent3.SetColor(MAGENTA);
+    /*agent3.SetSpeed(3);*/
+
+    Agent agent4(&nodeMap, fsm2); // fsm wander/flee agent
+    agent4.SetNode(nodeMap.GetRandomNode());
+    agent4.SetTarget(&agent);
+    /*agent4.SetSpeed(3);*/
     
     float time = (float)GetTime();
     float deltaTime;
@@ -96,6 +112,25 @@ int main(int argc, char* argv[])
             // Followig agent
             agent3.Update(deltaTime);
             agent3.DrawFollow();
+
+            // Followig agent
+            agent4.Update(deltaTime);
+            agent4.DrawFollow();
+
+            DrawCircle(70, 525, 8, GREEN);
+            DrawText("Dijkstras (lmb)", 100, 500, 50, WHITE);
+
+            DrawCircle(70, 625, 8, MAGENTA);
+            DrawText("A-Star (rmb)", 100, 600, 50, WHITE);
+
+            DrawCircle(70, 725, 8, SKYBLUE);
+            DrawText("Wander", 100, 700, 50, WHITE);
+
+            DrawCircle(70, 825, 8, ORANGE);
+            DrawText("Follower", 100, 800, 50, WHITE);
+
+            DrawCircle(70, 925, 8, BROWN);
+            DrawText("Flee", 100, 900, 50, WHITE);
 
         EndDrawing();
     }

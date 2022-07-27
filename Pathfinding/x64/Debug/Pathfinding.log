@@ -1,20 +1,4 @@
-﻿  Agent.cpp
+﻿  main.cpp
 C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
 C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
-  Behaviour.cpp
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
-  Condition.cpp
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
-  FiniteStateMachine.cpp
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
-  State.cpp
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
-  main.cpp
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(15,18): warning C4150: deletion of pointer to incomplete type 'AIForGames::Behaviour'; no destructor called
-C:\Users\s213090\Documents\AIforGames\Pathfinding\Agent.h(8): message : see declaration of 'AIForGames::Behaviour'
-  Generating Code...
   Pathfinding.vcxproj -> C:\Users\s213090\Documents\AIforGames\Pathfinding\x64\Debug\Pathfinding.exe

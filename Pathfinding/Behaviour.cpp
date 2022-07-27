@@ -5,13 +5,13 @@ namespace AIForGames
     void GotoPointBehaviour::Update(Agent* agent, float deltaTime)
     {
         // read mouse clicks
-        if (IsMouseButtonPressed(0))
+        if (IsMouseButtonPressed(0)) // rmb for dijkstra
         {
             agent->SetSearchType(1);
             Vector2 mousePos = GetMousePosition();
             agent->GoTo(glm::vec2(mousePos.x, mousePos.y));
         }
-        else if (IsMouseButtonPressed(1))
+        else if (IsMouseButtonPressed(1)) // lmb for A-Star
         {
             agent->SetSearchType(2);
             Vector2 mousePos = GetMousePosition();
@@ -21,10 +21,35 @@ namespace AIForGames
 
     void WanderBehaviour::Update(Agent* agent, float deltaTime) // Move to random node on map
     {
+        agent->SetColor(SKYBLUE);
+        agent->SetSpeed(3);
         if (agent->PathComplete())
         {
             // move to a random node on node map
             agent->GotToRandom();
+        }
+    }
+
+    void FleeBehaviour::Enter(Agent* agent)
+    {
+        agent->Reset();
+    }
+
+    void FleeBehaviour::Update(Agent* agent, float deltaTime)
+    {
+        agent->SetColor(BROWN);
+        agent->SetSpeed(8);
+        Agent* playerAgent = agent->GetTarget();
+        float dist = glm::distance(playerAgent->GetPosition(), lastPlayerPos);
+        if (dist > 0) // if target position changes by a whole square
+        {
+            //recalculate path
+            lastPlayerPos = playerAgent->GetPosition();
+            if (agent->PathComplete())
+            {
+                // move to a random node on node map
+                agent->FleeToRandom(lastPlayerPos);
+            }
         }
     }
 
@@ -35,6 +60,8 @@ namespace AIForGames
 
     void FollowBehaviour::Update(Agent* agent, float deltaTime)
     {
+        agent->SetColor(ORANGE);
+        agent->SetSpeed(5);
         // check if the agent has moved significantly from its last position
         // if so we want to repath towards it
         Agent* targetAgent = agent->GetTarget();
@@ -47,41 +74,5 @@ namespace AIForGames
             lastTargetPosition = targetAgent->GetPosition();
             agent->GoTo(targetAgent->GetNode());
         }
-    }
-
-    SelectorBehaviour::SelectorBehaviour(Behaviour* b1, Behaviour* b2)
-    {
-        m_b1 = b1;
-        m_b2 = b2;
-    }
-
-    void SelectorBehaviour::Update(Agent* agent, float deltaTime)
-    {
-        float dist = glm::distance(agent->GetPosition(), agent->GetTarget()->GetPosition());
-
-        if (dist < 5)
-        {
-            SetBehaviour(m_b1, agent);
-            agent->SetColor(ORANGE);
-        }
-        else
-        {
-            SetBehaviour(m_b2, agent);
-            agent->SetColor(SKYBLUE);
-        }
-
-        m_selected->Update(agent, deltaTime);
-    }
-
-    void SelectorBehaviour::SetBehaviour(Behaviour* b, Agent* agent)
-    {
-        if (m_selected != b)
-        {
-            m_selected = b;
-            agent->Reset();
-        }
-    }
-    Behaviour::Behaviour()
-    {
     }
 }

@@ -80,6 +80,18 @@ namespace AIForGames
 		m_pathAgent.GoToNode(random);
 	}
 
+	void Agent::FleeToRandom(glm::vec2 playerPos)
+	{
+		Node* random = m_nodeMap->GetRandomNode();
+		float dist = glm::distance(playerPos, random->position);
+		while (dist < 5)
+		{
+			random = m_nodeMap->GetRandomNode();
+			dist = glm::distance(playerPos, random->position);
+		}
+		m_pathAgent.GoToNode(random);
+	}
+
 	bool Agent::PathComplete()
 	{
 		return m_pathAgent.GetPath().empty();
