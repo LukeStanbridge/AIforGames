@@ -18,7 +18,6 @@ namespace AIForGames
 	public:
 		DistanceCondition(float d, bool lt) : m_distance(d), m_lessThan(lt) {}
 		virtual bool IsTrue(Agent* agent);
-		/*void SetColour(Agent* agent);*/
 	};
 }
 

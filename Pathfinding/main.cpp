@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
     // set up a FSM, we're going to have two states with their own conditions
     DistanceCondition* closerThan5 = new DistanceCondition(5.0f, true);
-    DistanceCondition* furtherThan5 = new DistanceCondition(5.1f, false);
+    DistanceCondition* furtherThan5 = new DistanceCondition(5.0f, false);
     DistanceCondition* furtherThan7 = new DistanceCondition(7.0f, false);
 
     // register these states with the FSM, so its responsible for deleting them now
@@ -79,12 +79,10 @@ int main(int argc, char* argv[])
     Agent agent3(&nodeMap, fsm); // fsm wander/follow agent
     agent3.SetNode(nodeMap.GetRandomNode());
     agent3.SetTarget(&agent);
-    /*agent3.SetSpeed(3);*/
 
     Agent agent4(&nodeMap, fsm2); // fsm wander/flee agent
     agent4.SetNode(nodeMap.GetRandomNode());
     agent4.SetTarget(&agent);
-    /*agent4.SetSpeed(3);*/
     
     float time = (float)GetTime();
     float deltaTime;

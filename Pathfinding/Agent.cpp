@@ -100,7 +100,7 @@ namespace AIForGames
 	// follow funtions
 	void Agent::SetTarget(Agent* agent) // set target to follow
 	{
-		// use agent to set to a destination targets
+		// use agent to set to a destination target
 		target = agent;
 	}
 
