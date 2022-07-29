@@ -1,3 +1,4 @@
+#pragma once
 #include "Behaviour.h"
 
 namespace AIForGames
@@ -30,6 +31,17 @@ namespace AIForGames
         }
     }
 
+    float WanderBehaviour::Evaluate(Agent* agent)
+    {
+        Agent* target = agent->GetTarget();
+        float dist = glm::distance(target->GetPosition(), agent->GetPosition());
+
+        float eval = dist;
+        if (eval < 0)
+            eval = 0;
+        return eval;
+    }
+
     void FleeBehaviour::Enter(Agent* agent)
     {
         agent->Reset();
@@ -37,7 +49,7 @@ namespace AIForGames
 
     void FleeBehaviour::Update(Agent* agent, float deltaTime)
     {
-        agent->SetColor(BROWN);
+        agent->SetColor(DARKBROWN);
         agent->SetSpeed(8);
         Agent* playerAgent = agent->GetTarget();
         float dist = glm::distance(playerAgent->GetPosition(), lastPlayerPos);
@@ -51,6 +63,25 @@ namespace AIForGames
                 agent->FleeToRandom(lastPlayerPos);
             }
         }
+        // eliminates agent stopping when player reaches endNode before flee agent and is still within flee distance
+        else if (dist == 0)
+        {
+            if (agent->PathComplete())
+            {
+                agent->FleeToRandom(lastPlayerPos);
+            }
+        }
+    }
+
+    float FleeBehaviour::Evaluate(Agent* agent)
+    {
+        Agent* target = agent->GetTarget();
+        float dist = glm::distance(target->GetPosition(), agent->GetPosition());
+
+        float eval = 10 - dist;
+        if (eval < 0)
+            eval = 0;
+        return eval;
     }
 
     void FollowBehaviour::Enter(Agent* agent)
@@ -74,5 +105,52 @@ namespace AIForGames
             lastTargetPosition = targetAgent->GetPosition();
             agent->GoTo(targetAgent->GetNode());
         }
+    }
+    float FollowBehaviour::Evaluate(Agent* agent)
+    {
+        Agent* target = agent->GetTarget();
+        float dist = glm::distance(target->GetPosition(), agent->GetPosition());
+
+        float eval = 10 - dist;
+        if (eval < 0)
+            eval = 0;
+        return eval;
+    }
+
+    UtilityAI::~UtilityAI()
+    {
+        for (Behaviour* b : m_behaviours)
+            delete b;
+    }
+
+    void UtilityAI::Update(Agent* agent, float deltaTime)
+    {
+        float bestEval = 0;
+        Behaviour* newBehaviour = nullptr;
+        for (Behaviour* b : m_behaviours)
+        {
+            float eval = b->Evaluate(agent);
+            if (eval > bestEval)
+            {
+                bestEval = eval;
+                newBehaviour = b;
+            }
+        }
+
+        if (newBehaviour != nullptr
+            && newBehaviour != currentBehaviour)
+        {
+            if (currentBehaviour)
+                currentBehaviour->Exit(agent);
+            currentBehaviour = newBehaviour;
+            currentBehaviour->Enter(agent);
+        }
+
+        currentBehaviour->Update(agent, deltaTime);
+    }
+
+    void UtilityAI::AddBehaviour(Behaviour* behaviour)
+    {
+        m_behaviours.push_back(behaviour);
     }
 }

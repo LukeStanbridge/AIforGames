@@ -3,6 +3,7 @@
 
 namespace AIForGames
 {
+	// abstract base class for all actions
 	class Behaviour
 	{
 		public:
@@ -11,6 +12,9 @@ namespace AIForGames
 			virtual void Enter(Agent* agent) {}
 			virtual void Update(Agent* agent, float deltaTime) = 0;
 			virtual void Exit(Agent* agent) {}
+
+			// used by UtilityAI to determine which behaviour to do
+			virtual float Evaluate(Agent* agent) { return 0.0f; }
 	};
 
 	class GotoPointBehaviour : public Behaviour
@@ -23,6 +27,7 @@ namespace AIForGames
 	{
 	public:
 		virtual void Update(Agent* agent, float deltaTime);
+		float Evaluate(Agent* agent);
 	};
 
 	class FleeBehaviour : public Behaviour
@@ -30,6 +35,7 @@ namespace AIForGames
 	public:
 		void Enter(Agent* agent);
 		virtual void Update(Agent* agent, float deltaTime);
+		float Evaluate(Agent* agent);
 	private:
 		glm::vec2 lastPlayerPos;
 	};
@@ -39,23 +45,20 @@ namespace AIForGames
 	public:
 		void Enter(Agent* agent);
 		virtual void Update(Agent* agent, float deltaTime);
+		float Evaluate(Agent* agent);
 	private:
 		glm::vec2 lastTargetPosition;
 	};
 
-	/*class SelectorBehaviour : public Behaviour
+	class UtilityAI : public Behaviour
 	{
-	private:
-		Behaviour* m_b1;
-		Behaviour* m_b2;
-		Behaviour* m_selected;
-
 	public:
-		SelectorBehaviour(Behaviour* b1, Behaviour* b2);
-		~SelectorBehaviour() { m_b1; m_b2; }
+		~UtilityAI();
 		virtual void Update(Agent* agent, float deltaTime);
-		void SetBehaviour(Behaviour* b, Agent* agent);
-		
-	};*/
+		void AddBehaviour(Behaviour* behaviour);
+	private:
+		std::vector<Behaviour*> m_behaviours;
+		Behaviour* currentBehaviour;
+	};
 }
 

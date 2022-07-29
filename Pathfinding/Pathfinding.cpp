@@ -176,51 +176,6 @@ namespace AIForGames
     {
         return m_cellSize;
     }
-    //bool NodeMap::IsVisibleFrom(Node* start, Node* end)
-    //{
-    //    // calculate a vector from start to end that is one cellsize in length
-    //    glm::vec2 delta = end->position - start->position;
-    //    float distance = glm::distance(end->position, start->position);
-    //    delta /= distance;
-
-    //    // step forward in that direction one cell at a time from start towards end
-    //    for (float cells = 0.5f; cells < distance; cells += 0.5f)
-    //    {
-    //        glm::vec2 testPosition = start->position + delta * cells;
-    //        // if the square below in unpassable, then we don’t have line of sight          
-    //        // from start to end
-    //        if (GetClosestNode(LocalToWorld(testPosition)) == nullptr)
-    //            return false;
-    //    }
-
-    //    // we've travelled the whole path without hitting an obstacle!
-    //    return true;
-    //}
-
-    //glm::vec2 NodeMap::LocalToWorld(const glm::vec2 local)
-    //{
-    //    return local + 0.5f /** m_cellSize)*/;
-    //}
-
-    //std::vector<Node*> NodeMap::SmoothPath(std::vector<Node*> path)
-    //{
-    //    if (path.size() <= 2) return path;
-
-    //    vector<Node*> smoothPath;
-    //    smoothPath.push_back(path.front());
-    //    Node* prev = path.front();
-
-    //    for (int i = 1; i < path.size(); i++)
-    //    {
-    //        if (!IsVisibleFrom(prev, path[i]))
-    //        {
-    //            smoothPath.push_back(path[i - 1]);
-    //            prev = path[i - 1];
-    //        }
-    //    }
-    //    if (path.back() != smoothPath.back()) smoothPath.push_back(path.back());
-    //    return smoothPath;
-    //}
 #pragma endregion
 
 #pragma region PathAgent
@@ -274,29 +229,27 @@ namespace AIForGames
         if (m_searchType == 1)
         {
             m_path = DijkstrasSearch(m_currentNode, node);
-           /* m_path = nodeMap.SmoothPath(m_path);*/
             m_currentIndex = 0;
         }
         else
         {
             m_path = AStarSearch(m_currentNode, node);
-           /* m_path = nodeMap.SmoothPath(m_path);*/
             m_currentIndex = 0;
         }
     }
 
     void PathAgent::Draw(Color colour)
     {
-        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 8, colour); //draw agent
+        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 12, colour); //draw agent
         if (!m_path.empty()) //if there is a path
         {
             nodeMap.DrawPath(m_path, YELLOW, m_currentNode, m_currentNode); //draw path
         }
     }
 
-    void PathAgent::DrawFollow(Color m_color)
+    void PathAgent::DrawFollow(Color m_color, int circleSize)
     {
-        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), 12, m_color); //draw agent
+        DrawCircle(((m_position.x + 0.5f) * 32), ((m_position.y + 0.5f) * 32), circleSize, m_color); //draw agent
     }
 
     void PathAgent::SetNode(Node* node)

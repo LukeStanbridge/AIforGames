@@ -53,9 +53,9 @@ namespace AIForGames
 		else m_pathAgent.Draw(YELLOW);
 	}
 
-	void Agent::DrawFollow()
+	void Agent::DrawFollow(int circleSize)
 	{
-		m_pathAgent.DrawFollow(m_color);
+		m_pathAgent.DrawFollow(m_color, circleSize);
 	}
 
 	void Agent::GoTo(glm::vec2 point)
